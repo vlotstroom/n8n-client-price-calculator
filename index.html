@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>n8n client price calculator</title>
+<meta name="description" content="Free calculator: what to charge for an n8n client project. Build hours by complexity, testing buffer, monthly retainer and a quote checklist. Runs in your browser, nothing is sent.">
+<link rel="canonical" href="https://vlotstroom.github.io/n8n-client-price-calculator/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vlotstroom.github.io/n8n-client-price-calculator/">
+<meta property="og:title" content="n8n client price calculator">
+<meta property="og:description" content="Free calculator: what to charge for an n8n client project. Build hours by complexity, testing buffer, monthly retainer and a quote checklist. Runs in your browser, nothing is sent.">
+<meta property="og:site_name" content="Vlotstroom">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"n8n client price calculator","url":"https://vlotstroom.github.io/n8n-client-price-calculator/","description":"Free calculator: what to charge for an n8n client project. Build hours by complexity, testing buffer, monthly retainer and a quote checklist. Runs in your browser, nothing is sent.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":["en","nl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"publisher":{"@type":"Organization","name":"Vlotstroom"}}
+</script>
+<style>
+:root{--ink:#1c2733;--mut:#5d6b7a;--line:#dfe6ee;--bg:#f7f9fb;--acc:#0f6f5c;--acc2:#0b4f42;--warn:#a8442a;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+main{max-width:920px;margin:0 auto;padding:24px 18px 64px}
+header h1{font-size:1.45rem;margin:0 0 6px}
+header p.sub{color:var(--mut);margin:0 0 4px}
+.langbar{margin:10px 0 18px}
+.langbar button{font:inherit;border:1px solid var(--line);background:var(--card);padding:4px 12px;border-radius:6px;cursor:pointer;color:var(--mut)}
+.langbar button[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:18px}
+.card h2{font-size:1.02rem;margin:0 0 12px}
+label{display:block;font-size:.86rem;color:var(--mut);margin:10px 0 4px}
+input[type=number],select{width:100%;font:inherit;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
+.wfline{display:grid;grid-template-columns:1.5fr .8fr .8fr 1fr;gap:8px;align-items:end;padding:7px 0;border-bottom:1px solid var(--line)}
+.wfline:last-of-type{border-bottom:none}
+.wfline .h{font-size:.78rem;color:var(--mut)}
+.optrow{display:grid;grid-template-columns:1.6fr .8fr 1fr;gap:8px;align-items:end;padding:7px 0;border-bottom:1px solid var(--line)}
+.optrow:last-of-type{border-bottom:none}
+.rategrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row .k{color:var(--mut);font-size:.9rem}
+.row .v{font-weight:600;font-variant-numeric:tabular-nums}
+.row.big .v{font-size:1.35rem;color:var(--warn)}
+.note{font-size:.8rem;color:var(--mut);margin-top:10px}
+.check ul{margin:8px 0 0;padding-left:20px}
+.check li{margin:6px 0;font-size:.92rem}
+.check .ct{font-weight:600;margin-top:12px}
+footer{margin-top:26px;font-size:.85rem;color:var(--mut)}
+footer a{color:var(--acc)}
+.badge{display:inline-block;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--acc2);border:1px solid var(--acc);border-radius:4px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+@media(max-width:700px){.wfline,.optrow,.rategrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1><span id="t-h1">What to charge for an n8n client project</span><span class="badge">free tool</span></h1>
+<p class="sub" id="sub">Estimate the build hours, the quote and the monthly retainer before you send the proposal. No signup, runs in your browser, nothing is sent anywhere.</p>
+<div class="langbar" role="group" aria-label="language">
+<button id="btn-en" aria-pressed="true" onclick="setLang('en')">English</button>
+<button id="btn-nl" aria-pressed="false" onclick="setLang('nl')">Nederlands</button>
+</div>
+</header>
+
+<section class="card">
+<h2 id="h-scope">1. Scope of the project</h2>
+<div class="wfline">
+<div><div class="h" id="l-simple">simple workflows <span data-i="d-simple">(webhook, a few nodes, one integration)</span></div></div>
+<div><label for="c-simple" id="l-count">how many</label><input type="number" id="c-simple" min="0" max="50" step="1" value="1"></div>
+<div><label for="h-simple" id="l-hrs">hours each</label><input type="number" id="h-simple" min="0" max="200" step="0.5" value="4"></div>
+<div class="h" id="o-simple">= 4 h</div>
+</div>
+<div class="wfline">
+<div><div class="h" id="l-medium">medium workflows <span data-i="d-medium">(branches, error arm, reply arm, 2-3 integrations)</span></div></div>
+<div><input type="number" id="c-medium" min="0" max="50" step="1" value="1" aria-label="how many medium"></div>
+<div><input type="number" id="h-medium" min="0" max="200" step="0.5" value="8" aria-label="hours each medium"></div>
+<div class="h" id="o-medium">= 8 h</div>
+</div>
+<div class="wfline">
+<div><div class="h" id="l-complex">complex workflows <span data-i="d-complex">(multi-stage, custom code, AI nodes, data migration inside the flow)</span></div></div>
+<div><input type="number" id="c-complex" min="0" max="50" step="1" value="0" aria-label="how many complex"></div>
+<div><input type="number" id="h-complex" min="0" max="200" step="0.5" value="16" aria-label="hours each complex"></div>
+<div class="h" id="o-complex">= 0 h</div>
+</div>
+
+<div class="optrow">
+<div><label style="display:flex;gap:8px;align-items:center;margin:0"><input type="checkbox" id="x-discovery" checked style="width:auto"><span id="l-disc">discovery and scoping (calls, write-up, access)</span></label></div>
+<div><input type="number" id="h-disc" min="0" max="100" step="0.5" value="3" aria-label="discovery hours"></div>
+<div class="h" id="o-disc">= 3 h</div>
+</div>
+<div class="optrow">
+<div><label style="display:flex;gap:8px;align-items:center;margin:0"><input type="checkbox" id="x-migration" style="width:auto"><span id="l-mig">data migration or cleanup from the old setup</span></label></div>
+<div><input type="number" id="h-mig" min="0" max="100" step="0.5" value="6" aria-label="migration hours"></div>
+<div class="h" id="o-mig">= 0 h</div>
+</div>
+<div class="optrow">
+<div><label style="display:flex;gap:8px;align-items:center;margin:0"><input type="checkbox" id="x-handover" checked style="width:auto"><span id="l-hand">client training, hand-over session and hand-over doc</span></label></div>
+<div><input type="number" id="h-hand" min="0" max="100" step="0.5" value="3" aria-label="hand-over hours"></div>
+<div class="h" id="o-hand">= 3 h</div>
+</div>
+
+<div class="rategrid">
+<div><label for="i-buffer" id="l-buf">testing and error-handling buffer, % of build hours</label><input type="number" id="i-buffer" min="0" max="100" step="1" value="25"></div>
+<div><label for="i-rate" id="l-rate">your hourly rate</label>
+<div style="display:flex;gap:8px">
+<select id="i-curr" style="width:auto"><option value="EUR">&euro;</option><option value="USD">$</option><option value="GBP">&pound;</option></select>
+<input type="number" id="i-rate" min="1" max="1000" step="1" value="50">
+</div></div>
+</div>
+<p class="note" id="t-snote">Default hours are editable starting points, not benchmarks. Practitioners on r/n8n report 1-2 hours of maintenance per client per month on a mature setup, and more in the first 90 days. Totals below use only the numbers on this page.</p>
+</section>
+
+<section class="card">
+<h2 id="h-quote">2. Project price</h2>
+<div class="row"><span class="k" id="l-sub">build subtotal</span><span class="v" id="o-sub">18 h</span></div>
+<div class="row"><span class="k" id="l-bufl">buffer at <span id="o-bufpct">25</span>%</span><span class="v" id="o-buf">+ 4.5 h</span></div>
+<div class="row"><span class="k" id="l-toth">total hours</span><span class="v" id="o-toth">22.5 h</span></div>
+<div class="row"><span class="k" id="l-floor">cost floor at your rate (no buffer)</span><span class="v" id="o-floor">&euro;900</span></div>
+<div class="row big"><span class="k" id="l-qp">quote with buffer</span><span class="v" id="o-quote">&euro;1,125</span></div>
+<p class="note" id="t-qnote">The floor is what the work costs if nothing surprises you. The quote carries the buffer for the edge cases that were not in scope. Scope creep after sign-off belongs in a change order, not in a bigger quote now.</p>
+</section>
+
+<section class="card">
+<h2 id="h-ret">3. Monthly retainer</h2>
+<div class="rategrid">
+<div><label for="i-maint" id="l-maint">maintenance hours per month</label><input type="number" id="i-maint" min="0" max="100" step="0.5" value="1.5"></div>
+<div><label for="i-host" id="l-host">hosting you pass through</label>
+<select id="i-host">
+<option value="none" id="opt-none">client hosts it themselves</option>
+<option value="vps" id="opt-vps" selected>shared VPS</option>
+<option value="ded" id="opt-ded">dedicated plan</option>
+</select></div>
+</div>
+<div class="rategrid" id="host-vps">
+<div><label for="i-vps" id="l-vps">VPS cost per month</label><input type="number" id="i-vps" min="0" max="500" step="1" value="8"></div>
+<div><label for="i-clients" id="l-cli">clients sharing it</label><input type="number" id="i-clients" min="1" max="50" step="1" value="6"></div>
+</div>
+<div class="rategrid" id="host-ded" style="display:none">
+<div><label for="i-ded" id="l-ded">plan cost per month, editable, check current pricing</label><input type="number" id="i-ded" min="0" max="500" step="1" value="24"></div>
+</div>
+<div class="row"><span class="k" id="l-mh">maintenance</span><span class="v" id="o-mh">&euro;75</span></div>
+<div class="row"><span class="k" id="l-hh">hosting</span><span class="v" id="o-hh">&euro;1.33</span></div>
+<div class="row big"><span class="k" id="l-rt">retainer per month</span><span class="v" id="o-rt">&euro;76.33</span></div>
+<p class="note" id="t-rnote">Never absorb variable API costs (AI calls, SMS, OCR, enrichment) in a flat retainer. Run the workflows on the client's own accounts and keys, and set a monthly usage cap: above the cap, pause or ask for approval. Practitioners report the API bill is where flat-fee deals go wrong, not the hosting.</p>
+</section>
+
+<section class="card check">
+<h2 id="h-check">4. Quote checklist</h2>
+<p class="ct" id="c-in">Name what the maintenance retainer includes:</p>
+<ul>
+<li id="c-in1">small fixes and workflow error fixes, with an error alert to you</li>
+<li id="c-in2">hosting and uptime of the instance, if you host it</li>
+<li id="c-in3">a short monthly report: runs, failures, fixes done</li>
+</ul>
+<p class="ct" id="c-out">Name what it does not include, priced separately:</p>
+<ul>
+<li id="c-out1">new features and new workflows</li>
+<li id="c-out2">changes to the core of an existing workflow</li>
+<li id="c-out3">third-party usage above the agreed monthly cap</li>
+</ul>
+<p class="ct" id="c-var">Split the money:</p>
+<ul>
+<li id="c-var1">your fee covers consultation, setup and maintenance</li>
+<li id="c-var2">subscriptions and API keys stay in the client's name</li>
+<li id="c-var3">retainers typically run 6-12 months; longer locks a better rate</li>
+</ul>
+</section>
+
+<footer>
+<p id="t-foot1">Built by Vlotstroom. We sell a ready-made n8n client-delivery kit for salons and clinics: 7 workflows, a delivery runbook and a hand-over document, &euro;29:</p>
+<p><a href="https://vlotstream.gumroad.com/l/rhmxw" id="t-link" rel="noopener">Vlotstroom Afspraakpack for n8n</a></p>
+<p><a href="https://vlotstroom.hmdev.nl/" id="t-home" rel="noopener">vlotstroom.hmdev.nl</a></p>
+<p><span id="t-foot2">Related free tools:</span> <a href="https://vlotstroom.github.io/noshow-calculator/" rel="noopener"><span id="l-link1">no-show cost calculator</span></a> &middot; <a href="https://vlotstroom.github.io/waitlist-calculator/" rel="noopener"><span id="l-link2">waitlist fill-rate calculator</span></a> &middot; <a href="https://vlotstroom.github.io/n8n-cost-calculator/" rel="noopener"><span id="l-link3">n8n AI workflow cost calculator</span></a>.</p>
+</footer>
+</main>
+<script>
+var I18N={
+ en:{
+  "t-h1":"What to charge for an n8n client project",
+  "sub":"Estimate the build hours, the quote and the monthly retainer before you send the proposal. No signup, runs in your browser, nothing is sent anywhere.",
+  "h-scope":"1. Scope of the project","l-simple":"simple workflows","d-simple":"(webhook, a few nodes, one integration)",
+  "l-medium":"medium workflows","d-medium":"(branches, error arm, reply arm, 2-3 integrations)",
+  "l-complex":"complex workflows","d-complex":"(multi-stage, custom code, AI nodes, data migration inside the flow)",
+  "l-count":"how many","l-hrs":"hours each",
+  "l-disc":"discovery and scoping (calls, write-up, access)",
+  "l-mig":"data migration or cleanup from the old setup",
+  "l-hand":"client training, hand-over session and hand-over doc",
+  "l-buf":"testing and error-handling buffer, % of build hours","l-rate":"your hourly rate",
+  "t-snote":"Default hours are editable starting points, not benchmarks. Practitioners on r/n8n report 1-2 hours of maintenance per client per month on a mature setup, and more in the first 90 days. Totals below use only the numbers on this page.",
+  "h-quote":"2. Project price","l-sub":"build subtotal","l-bufl":"buffer","l-toth":"total hours",
+  "l-floor":"cost floor at your rate (no buffer)","l-qp":"quote with buffer",
+  "t-qnote":"The floor is what the work costs if nothing surprises you. The quote carries the buffer for the edge cases that were not in scope. Scope creep after sign-off belongs in a change order, not in a bigger quote now.",
+  "h-ret":"3. Monthly retainer","l-maint":"maintenance hours per month","l-host":"hosting you pass through",
+  "opt-none":"client hosts it themselves","opt-vps":"shared VPS","opt-ded":"dedicated plan",
+  "l-vps":"VPS cost per month","l-cli":"clients sharing it",
+  "l-ded":"plan cost per month, editable, check current pricing",
+  "l-mh":"maintenance","l-hh":"hosting","l-rt":"retainer per month",
+  "t-rnote":"Never absorb variable API costs (AI calls, SMS, OCR, enrichment) in a flat retainer. Run the workflows on the client's own accounts and keys, and set a monthly usage cap: above the cap, pause or ask for approval. Practitioners report the API bill is where flat-fee deals go wrong, not the hosting.",
+  "h-check":"4. Quote checklist",
+  "c-in":"Name what the maintenance retainer includes:",
+  "c-in1":"small fixes and workflow error fixes, with an error alert to you",
+  "c-in2":"hosting and uptime of the instance, if you host it",
+  "c-in3":"a short monthly report: runs, failures, fixes done",
+  "c-out":"Name what it does not include, priced separately:",
+  "c-out1":"new features and new workflows",
+  "c-out2":"changes to the core of an existing workflow",
+  "c-out3":"third-party usage above the agreed monthly cap",
+  "c-var":"Split the money:",
+  "c-var1":"your fee covers consultation, setup and maintenance",
+  "c-var2":"subscriptions and API keys stay in the client's name",
+  "c-var3":"retainers typically run 6-12 months; longer locks a better rate",
+  "t-foot1":"Built by Vlotstroom. We sell a ready-made n8n client-delivery kit for salons and clinics: 7 workflows, a delivery runbook and a hand-over document, \u20ac29:",
+  "t-foot2":"Related free tools:",
+  "l-link1":"no-show cost calculator","l-link2":"waitlist fill-rate calculator","l-link3":"n8n AI workflow cost calculator"
+ },
+ nl:{
+  "t-h1":"Wat vraag je voor een n8n-klantproject",
+  "sub":"Schat de bouwuren, de offerte en het maandelijks bedrag in voordat je het voorstel verstuurt. Geen account, draait in je browser, er wordt niets verstuurd.",
+  "h-scope":"1. Omvang van het project","l-simple":"eenvoudige workflows","d-simple":"(webhook, enkele nodes, \u00e9\u00e9n integratie)",
+  "l-medium":"middelgrote workflows","d-medium":"(vertakkingen, foutafhandeling, antwoordarm, 2-3 integraties)",
+  "l-complex":"complexe workflows","d-complex":"(meerfasig, eigen code, AI-nodes, datamigratie in de flow)",
+  "l-count":"hoeveel","l-hrs":"uren per stuk",
+  "l-disc":"vooronderzoek en scoping (gesprekken, plan, toegang)",
+  "l-mig":"datamigratie of opschoonwerk uit de oude situatie",
+  "l-hand":"instructie, overdrachtssessie en overdrachtsdocument",
+  "l-buf":"buffer voor testen en foutafhandeling, % van bouwuren","l-rate":"je uurtarief",
+  "t-snote":"De standaarduren zijn bewerkbare vertrekpunten, geen benchmarks. Praktijkmensen op r/n8n noemen 1-2 uur onderhoud per klant per maand bij een volwassen setup, en meer in de eerste 90 dagen. Totalen hieronder gebruiken alleen de getallen op deze pagina.",
+  "h-quote":"2. Projectprijs","l-sub":"subtotaal bouw","l-bufl":"buffer","l-toth":"totaal uren",
+  "l-floor":"kostprijs tegen jouw tarief (zonder buffer)","l-qp":"offerte met buffer",
+  "t-qnote":"De kostprijs is wat het werk kost als niets verrast. De offerte draagt de buffer voor de gevallen die niet in scope zaten. Extra wensen na akkoord horen in een wijzigingsopdracht, niet in een hogere offerte nu.",
+  "h-ret":"3. Maandelijkse retainer","l-maint":"onderhoudsuren per maand","l-host":"hosting die je doorberekent",
+  "opt-none":"klant host het zelf","opt-vps":"gedeelde VPS","opt-ded":"eigen plan",
+  "l-vps":"VPS-kosten per maand","l-cli":"delende klanten",
+  "l-ded":"plankosten per maand, bewerkbaar, check actuele prijzen",
+  "l-mh":"onderhoud","l-hh":"hosting","l-rt":"retainer per maand",
+  "t-rnote":"Nooit variabele API-kosten (AI-calls, sms, OCR, verrijking) opnemen in een vast maandelijks bedrag. Draai de workflows op accounts en sleutels van de klant zelf en spreek een maandelijks plafond af: daarboven pauzeren of goedkeuring vragen. Uit de praktijk komt de les dat de API-afrekening het vaste-fee-traject breekt, niet de hosting.",
+  "h-check":"4. Offerte-checklist",
+  "c-in":"Noem wat de onderhoudsretainer omvat:",
+  "c-in1":"kleine fixes en foutherstel in workflows, met een foutmelding naar jou",
+  "c-in2":"hosting en beschikbaarheid van de instantie, als jij host",
+  "c-in3":"een korte maandrapportage: runs, fouten, uitgevoerde fixes",
+  "c-out":"Noem wat er niet in zit, apart geprijsd:",
+  "c-out1":"nieuwe features en nieuwe workflows",
+  "c-out2":"wijzigingen aan de kern van een bestaande workflow",
+  "c-out3":"derde-partij-gebruik boven het afgesproken maandplafond",
+  "c-var":"Verdeel het geld:",
+  "c-var1":"jouw vergoeding dekt consult, setup en onderhoud",
+  "c-var2":"abonnementen en API-sleutels blijven op naam van de klant",
+  "c-var3":"retainers lopen doorgaans 6-12 maanden; langer geeft een beter tarief",
+  "t-foot1":"Gebouwd door Vlotstroom. Wij verkopen een kant-en-klare n8n-client-deliverykit voor salons en klinieken: 7 workflows, een delivery-runbook en een overdrachtsdocument, \u20ac29:",
+  "t-foot2":"Gerelateerde gratis tools:",
+  "l-link1":"no-show kostencalculator","l-link2":"waitlist-vulratecalculator","l-link3":"n8n AI-workflowkostencalculator"
+ }
+};
+var LANG="en";
+var SYM={EUR:"\u20ac",USD:"$",GBP:"\u00a3"};
+function num(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)?v:0;}
+function fmt(n){return SYM[currsym()]+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});}
+function currsym(){return document.getElementById("i-curr").value;}
+function hrs(n){return (Math.round(n*10)/10)+" h";}
+function calc(){
+ var s=num("c-simple")*num("h-simple"),m=num("c-medium")*num("h-medium"),x=num("c-complex")*num("h-complex");
+ var disc=document.getElementById("x-discovery").checked?num("h-disc"):0;
+ var mig=document.getElementById("x-migration").checked?num("h-mig"):0;
+ var hand=document.getElementById("x-handover").checked?num("h-hand"):0;
+ var sub=s+m+x+disc+mig+hand;
+ var pct=num("i-buffer");
+ var buf=sub*pct/100;
+ var tot=sub+buf;
+ var rate=num("i-rate");
+ var floor=sub*rate, quote=tot*rate;
+ document.getElementById("o-simple").textContent="= "+hrs(s);
+ document.getElementById("o-medium").textContent="= "+hrs(m);
+ document.getElementById("o-complex").textContent="= "+hrs(x);
+ document.getElementById("o-disc").textContent="= "+hrs(disc);
+ document.getElementById("o-mig").textContent="= "+hrs(mig);
+ document.getElementById("o-hand").textContent="= "+hrs(hand);
+ document.getElementById("o-sub").textContent=hrs(sub);
+ document.getElementById("o-bufpct").textContent=String(Math.round(pct));
+ document.getElementById("o-buf").textContent="+ "+hrs(buf);
+ document.getElementById("o-toth").textContent=hrs(tot);
+ document.getElementById("o-floor").textContent=fmt(floor);
+ document.getElementById("o-quote").textContent=fmt(quote);
+ var maint=num("i-maint")*rate;
+ var hostModel=document.getElementById("i-host").value;
+ var host=0;
+ if(hostModel==="vps"){var c=num("i-clients");host=c>0?num("i-vps")/c:0;}
+ else if(hostModel==="ded"){host=num("i-ded");}
+ document.getElementById("host-vps").style.display=hostModel==="vps"?"grid":"none";
+ document.getElementById("host-ded").style.display=hostModel==="ded"?"grid":"none";
+ document.getElementById("o-mh").textContent=fmt(maint);
+ document.getElementById("o-hh").textContent=fmt(host);
+ document.getElementById("o-rt").textContent=fmt(maint+host);
+ window.__calc={sub:sub,buf:buf,tot:tot,floor:floor,quote:quote,maint:maint,host:host,retainer:maint+host};
+}
+var TRANS=["t-h1","sub","h-scope","l-simple","l-medium","l-complex","l-count","l-hrs","l-disc","l-mig","l-hand","l-buf","l-rate","t-snote","h-quote","l-sub","l-toth","l-floor","l-qp","t-qnote","h-ret","l-maint","l-host","l-vps","l-cli","l-ded","l-mh","l-hh","l-rt","t-rnote","h-check","c-in","c-in1","c-in2","c-in3","c-out","c-out1","c-out2","c-out3","c-var","c-var1","c-var2","c-var3","t-foot1","t-foot2","l-link1","l-link2","l-link3"];
+function setLang(l){
+ LANG=l;
+ document.documentElement.lang=l;
+ for(var i=0;i<TRANS.length;i++){var el=document.getElementById(TRANS[i]);if(el)el.textContent=I18N[l][TRANS[i]];}
+ ["d-simple","d-medium","d-complex"].forEach(function(k){
+  var el=document.querySelector('[data-i="'+k+'"]');if(el)el.textContent=I18N[l][k];
+ });
+ document.getElementById("btn-en").setAttribute("aria-pressed",l==="en");
+ document.getElementById("btn-nl").setAttribute("aria-pressed",l==="nl");
+ calc();
+}
+document.addEventListener("input",function(e){if(e.target.closest(".card")||e.target.id==="i-curr")calc();});
+document.addEventListener("change",function(e){if(e.target.closest(".card"))calc();});
+setLang("en");
+</script>
+</body>
+</html>
