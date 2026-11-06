@@ -26,8 +26,9 @@ lists, usage caps on variable API costs).
 Built by Vlotstroom. We sell a ready-made n8n client-delivery kit for
 salons and clinics (7 workflows, delivery runbook, hand-over document):
 https://vlotstream.gumroad.com/l/rhmxw
-
-Related free tools:
+All Vlotstroom calculators (free, no signup, no tracking):
 - no-show cost calculator: https://vlotstroom.github.io/noshow-calculator/
 - waitlist fill-rate calculator: https://vlotstroom.github.io/waitlist-calculator/
 - n8n AI workflow cost calculator: https://vlotstroom.github.io/n8n-cost-calculator/
+
+Site, walkthroughs and the paid client-delivery kit: https://vlotstroom.hmdev.nl
